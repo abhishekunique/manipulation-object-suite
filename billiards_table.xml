@@ -1,0 +1,11 @@
+<body name="table_2" pos="-1.5 -1.5 0.35" >
+    <geom name="table_top2" type="box" pos="0 0 0" size="1.5 0.75 0.01" rgba='0.13 0.6 0.13 1'/>
+    <geom name="leg12" type="box" pos="1.45 0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg22" type="box" pos="1.45 -0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg32" type="box" pos="-1.45 0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg42" type="box" pos="-1.45 -0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_left2" type="box" pos="0 0.75 0.075" size="1.5 0.02 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_right2" type="box" pos="0 -0.75 0.075" size="1.5 0.02 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_top2" type="box" pos="1.5 0 0.075" size="0.02 0.75 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_bottom2" type="box" pos="-1.5 0 0.075" size="0.02 0.75 0.075" rgba='0.5 0.2 0 1'/>
+</body>

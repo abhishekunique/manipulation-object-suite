@@ -1,0 +1,5 @@
+<body name="sphere1" pos="0.8 1 0.45" >
+    <geom name="sphere_geom" type="sphere" pos="0 0 0" size="0.075" rgba='1 0.5 0.5 1'/>
+    <site name="objectsite" pos="0 0 -0.075" size="0.01" />
+    <joint name="object_free" limited="false" type="free" pos="0 0 0" damping="10.0" />
+</body>

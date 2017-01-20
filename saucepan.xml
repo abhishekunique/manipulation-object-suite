@@ -1,0 +1,6 @@
+<body name="saucepan1" pos="0.7 0.6 0.45" >
+    <geom name="saucepan_base1" type="cylinder" pos="0 0 0" size="0.15 0.075" rgba='0 0 0 1'/>
+    <geom name="saucepan_handle1" type="box" pos="0.1 0 0.065" size="0.2 0.03 0.01" rgba='0 0 0 1'/>
+    <site name="objectsite" pos="0 0 -0.075" size="0.01" />
+    <joint name="object_free" limited="false" type="free" pos="0 0 0" damping="10.0" />
+</body>

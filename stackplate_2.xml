@@ -1,0 +1,5 @@
+<body name="stackplate2" pos="0.7 1.8 0.45" >
+    <geom name="stackplate2_geom" type="box" pos="0 0 0" size="0.12 0.16 0.03" rgba='0 1 0 1'/>
+    <site name="objectsite2" pos="0 0 -0.03" size="0.01" />
+    <joint name="object_free" limited="false" type="free" pos="0 0 0" damping="10.0" />
+</body>

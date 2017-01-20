@@ -1,0 +1,9 @@
+<body name="cup_2" pos="1 1.2 0.38" >
+    <geom name="cup_bottom2" type="box" pos="0 0 0" size="0.1 0.1 0.01" rgba='1 0.5 0.5 1'/>
+    <geom name="cup_left2" type="box" pos="0.1 0 0.1" size="0.01 0.1 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_right2" type="box" pos="-0.1 0 0.1" size="0.01 0.1 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_front2" type="box" pos="0 0.1 0.1" size="0.1 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_back2" type="box" pos="0 -0.1 0.1" size="0.1 0.01 0.1" rgba='0 0 0 1'/>
+    <site name="objectsite" pos="0 0 0" size="0.01" />
+    <joint name="object_free" limited="false" type="free" pos="0 0 0" damping="10.0" />
+</body>

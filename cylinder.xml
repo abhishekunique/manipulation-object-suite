@@ -1,0 +1,5 @@
+<body name="cylinder1" pos="1.8 1.8 0.48" >
+    <geom name="cylinder_geom1" type="cylinder" pos="0 0 0" size="0.05 0.13" rgba='1 1 1 1'/>
+    <site name="objectsite" pos="0 0 -0.13" size="0.01" />
+    <joint name="object_free" limited="false" type="free" pos="0 0 0" damping="10.0" />
+</body>

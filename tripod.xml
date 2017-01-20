@@ -1,0 +1,7 @@
+<body name="triangle_object1" pos="0.7 1.4 0.45" >
+    <geom name="side1" type="box" pos="0 0 0" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="side2" type="box" pos="-0.034 0.06 0" quat="0.866 0 0 0.5" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="side3" type="box" pos="0.034 0.06 0" quat="0.866 0 0 -0.5" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <site name="objectsite" pos="0 0 -0.1" size="0.01" />
+    <joint name="object_free" type="free" limited="false" pos="0 0 0" damping="10.0" />
+</body>

@@ -1,0 +1,4 @@
+<body name="goal_location" pos="1.25 -2.75 0.36">
+    <geom name="goal_geom1" type="box" pos="0 0 0" rgba="1 0 0 1" size="0.1 0.1 0.01"/>
+    <site name="goalsite" pos="0 0 0" size="0.01" />
+</body>

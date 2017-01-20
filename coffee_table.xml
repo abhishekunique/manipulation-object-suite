@@ -1,0 +1,274 @@
+<mujoco model="kitchen_world">
+    <compiler inertiafromgeom="true" angle="radian" coordinate="local" />
+    <!-- <option timestep="0.01" gravity="0 0 0" iterations="20" integrator="RK4" /> -->
+    <custom>
+      <numeric name="frame_skip" data="50" />
+    </custom>
+    <option timestep="0.001" gravity="0 0 0" iterations="1000" integrator="Euler" />
+    <default>
+        <joint armature="0.04" damping="10" limited="true" />
+        <geom friction=".5 .1 .1" margin="0.002" condim="1" contype="0" conaffinity="0" />
+    </default>
+    <asset>
+      <texture type="skybox" builtin="gradient" width="100" height="100" rgb1="1 1 1" rgb2="0.5 1 0" />
+      <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" random="0.01" />
+      <texture name="texplane" type="2d" builtin="checker" rgb1="0 0 0" rgb2="0.8 0.8 0.8" width="100" height="100" />
+      <material name='MatPlane' texture="texplane" shininess="1" texrepeat="30 30" specular="1"  reflectance="0.5" />
+      <material name='geom' texture="texgeom" texuniform="true" />
+    </asset>
+
+  <worldbody>
+    <light directional="true" cutoff="100" exponent="1" diffuse="1 1 1" specular=".1 .1 .1" pos="0 0 1.3" dir="-0 0 -1.3" />
+    <geom name='floor' material="MatPlane" pos='0 0 -0.1' size='40 40 0.1' type='plane' conaffinity='1' rgba='0.8 0.9 0.8 1' condim='3' />
+    <!--  ================= SWIMMER ================= /-->
+    
+
+    <body name="torso" pos="0 -0.188 0.7">
+       <joint name="base_x" type="slide" pos="0 0 -0.5" axis="1 0 0" range="-200.2854 200.714602" limited="true" />
+       <joint name="base_y" type="slide" pos="0 0 -0.5" axis="0 1 0" range="-200.2854 200.714602" limited="true" />
+       <!-- <joint name="base_y" type="slide" pos="0 0 -0.5" axis="0 1 0" limited="false" /> -->
+
+        <geom name="torso" type="capsule" fromto="0 0 -0.6 0 0 0.2" size="0.1" />
+        <geom name="sp1" type="capsule" fromto="-0.2 0 -0.7 0.2 0 -0.7" size="0.05" />
+        <geom name="sp2" type="capsule" fromto="0 -0.2 -0.7 0 0.2 -0.7" size="0.05" />
+        <joint name="r_shoulder_pan_joint" type="hinge" pos="0 0 0" axis="0 0 1" range="-2.2854 1.714602" damping="100.0" />
+
+        <body name="r_shoulder_lift_link" pos="0.1 0 0">
+            <geom name="sl" type="capsule" fromto="0 -0.1 0 0 0.1 0" size="0.1" />
+            <joint name="r_shoulder_lift_joint" type="hinge" pos="0 0 0" axis="0 1 0" range="-0.5236 1.3963" damping="100.0" />
+
+            <body name="r_upper_arm_roll_link" pos="0 0 0">
+                <geom name="uar" type="capsule" fromto="-0.1 0 0 0.1 0 0" size="0.02" />
+                <joint name="r_upper_arm_roll_joint" type="hinge" pos="0 0 0" axis="1 0 0" range="-3.9 0.8" damping="1" />
+
+                <body name="r_upper_arm_link" pos="0 0 0">
+                    <geom name="ua" type="capsule" fromto="0 0 0 0.4 0 0" size="0.06" />
+
+                    <body name="r_elbow_flex_link" pos="0.4 0 0">
+                        <geom name="ef" type="capsule" fromto="0 -0.02 0 0.0 0.02 0" size="0.06" />
+                        <joint name="r_elbow_flex_joint" type="hinge" pos="0 0 0" axis="0 1 0" range="-2.3213 0" damping="10.0" />
+
+                        <body name="r_forearm_roll_link" pos="0 0 0">
+                            <geom name="fr" type="capsule" fromto="-0.1 0 0 0.1 0 0" size="0.02" />
+                            <joint name="r_forearm_roll_joint" type="hinge" limited="false" pos="0 0 0" axis="1 0 0" damping="1" />
+
+                            <body name="r_forearm_link" pos="0 0 0">
+                                <geom name="fa" type="capsule" fromto="0 0 0 0.321 0 0" size="0.05" />
+
+                                <body name="r_wrist_flex_link" pos="0.321 0 0">
+                                    <geom name="wf" type="capsule" fromto="0 -0.02 0 0 0.02 0" size="0.01" />
+                                    <joint name="r_wrist_flex_joint" type="hinge" pos="0 0 0" axis="0 1 0" range="-2.094 0" damping="1" />
+
+                                    <body name="r_wrist_roll_link" pos="0 0 0">
+                                        <geom name="wr" type="capsule" fromto="-0.02 0 0 0.02 0 0" size="0.01" />
+                                        <joint name="r_wrist_roll_joint" type="hinge" pos="0 0 0" limited="false" axis="1 0 0" damping="1" />
+
+                                        <body name="r_gripper_palm_link" pos="0 0 0">
+                                            
+                                            <site name="gripper_pos" pos="0.1 0 0" size="0.01" />
+                                            
+                                            <body name="left_slide_body" pos="0.1 0.15 0">
+                                                <joint name="left_slide" type="slide" pos="0 0 0" range="-0.15 0" damping="10.0" limited="true" axis="0 1 0"/>
+                                                <geom name="leftbox" type="box" pos="0 0 0" size="0.1 0.01 0.03"/>
+                                            </body>
+                                            
+                                            <geom name="backbox" type="box" size="0.01 0.15 0.03"/>
+                                            
+                                            
+                                            <body name="right_slide_body" pos="0.1 -0.15 0">
+                                                <joint name="right_slide" type="slide" pos="0 0 0" range="0 0.15" damping="10.0" limited="true" axis="0 1 0"/>
+                                                <geom name="rightbox" type="box" pos="0 0 0" size="0.1 0.01 0.03"/>
+                                            </body>
+                                            
+                                            
+                                            
+                                        </body>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </body>
+
+
+<body name="table_1" pos="1.25 1.25 0.35">
+    <geom name="table_top1" type="box" pos="0 0 0" size="0.8 0.8 0.01"/>
+    <geom name="leg11" type="box" pos="0.75 0.75 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg21" type="box" pos="0.75 -0.75 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg31" type="box" pos="-0.75 0.75 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg41" type="box" pos="-0.75 -0.75 -0.2" size="0.05 0.05 0.2"/>
+</body>
+
+
+
+<body name="cup_1" pos="1 0.8 0.38" >
+    <geom name="cup_bottom1" type="box" pos="0 0 0" size="0.05 0.05 0.01" rgba='1 0.5 0.5 1'/>
+    <geom name="cup_left1" type="box" pos="0.05 0 0.1" size="0.01 0.05 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_right1" type="box" pos="-0.05 0 0.1" size="0.01 0.05 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_front1" type="box" pos="0 0.05 0.1" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_back1" type="box" pos="0 -0.05 0.1" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+</body>
+
+<body name="cup_2" pos="1 1.2 0.38" >
+    <geom name="cup_bottom2" type="box" pos="0 0 0" size="0.1 0.1 0.01" rgba='1 0.5 0.5 1'/>
+    <geom name="cup_left2" type="box" pos="0.1 0 0.1" size="0.01 0.1 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_right2" type="box" pos="-0.1 0 0.1" size="0.01 0.1 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_front2" type="box" pos="0 0.1 0.1" size="0.1 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="cup_back2" type="box" pos="0 -0.1 0.1" size="0.1 0.01 0.1" rgba='0 0 0 1'/>
+</body>
+
+<body name="block1" pos="1.3 1 0.38" >
+    <geom name="block_geom" type="box" pos="0 0 0" size="0.075 0.15 0.03" rgba='1 0.5 0.5 1'/>
+</body>
+
+
+<body name="sphere1" pos="0.8 1 0.45" >
+    <geom name="sphere_geom" type="sphere" pos="0 0 0" size="0.075" rgba='1 0.5 0.5 1'/>
+</body>
+
+<body name="saucepan1" pos="0.7 0.6 0.45" >
+    <geom name="saucepan_base1" type="cylinder" pos="0 0 0" size="0.15 0.075" rgba='0 0 0 1'/>
+    <geom name="saucepan_handle1" type="box" pos="0.1 0 0.065" size="0.2 0.03 0.01" rgba='0 0 0 1'/>
+</body>
+
+<body name="triangle_object1" pos="0.7 1.4 0.45" >
+    <geom name="side1" type="box" pos="0 0 0" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="side2" type="box" pos="-0.034 0.06 0" quat="0.866 0 0 0.5" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+    <geom name="side3" type="box" pos="0.034 0.06 0" quat="0.866 0 0 -0.5" size="0.05 0.01 0.1" rgba='0 0 0 1'/>
+</body>
+
+
+<body name="handle_object" pos="1.4 1.4 0.5" >
+    <geom name="handle_base" type="box" pos="0 0 0" size="0.1 0.1 0.15" rgba='0 0 0 1'/>
+    <geom name="handle_geom" type="box" pos="0.12 0 0" size="0.07 0.05 0.08" rgba='1 1 1 1'/>
+</body>
+
+<body name="disc1" pos="1.4 0.7 0.4" >
+    <geom name="disc_geom1" type="cylinder" pos="0 0 0" size="0.05 0.015" rgba='1 1 1 1'/>
+</body>
+
+<body name="disc2" pos="1.2 0.7 0.4" >
+    <geom name="disc_geom2" type="cylinder" pos="0 0 0" size="0.05 0.015" rgba='1 1 1 1'/>
+</body>
+
+
+<body name="ellipsoid1" pos="1.6 0.7 0.4" >
+    <geom name="ellipsoid_geom1" type="ellipsoid" pos="0 0 0" size="0.065 0.05 0.025" rgba='1 0 0 1'/>
+</body>
+
+<body name="cylinder1" pos="1.8 1.8 0.48" >
+    <geom name="cylinder_geom1" type="cylinder" pos="0 0 0" size="0.05 0.13" rgba='1 1 1 1'/>
+</body>
+
+<body name="door_type1" pos="1.8 0.5 0.5" >
+    <geom name="backboard_door1" type="box" pos="0 0 0" size="0.2 0.03 0.15" rgba='0 0 0 1'/>
+    <body name="key_door1" pos="0 -0.03 0">
+        <geom name="handle_door1" type="capsule" fromto="0 0 0 0 -0.07 0" size="0.02"  rgba='1 1 1 1'/>
+        <geom name="handle_end_door1" type="cylinder" quat="0.707 0 -0.707 0" pos="0 -0.14 0" size="0.07 0.01" rgba='1 1 1 1'/>
+        <joint name="handle_joint_door1" type="hinge" pos="0 0 0" axis="0 1 0" range="0 1.57" damping="100.0" />
+    </body>
+</body>
+
+
+<body name="stackplate1" pos="0.7 1.8 0.38" >
+    <geom name="stackplate1_geom" type="box" pos="0 0 0" size="0.15 0.2 0.03" rgba='0 0 1 1'/>
+</body>
+
+<body name="stackplate2" pos="0.7 1.8 0.45" >
+    <geom name="stackplate2_geom" type="box" pos="0 0 0" size="0.12 0.16 0.03" rgba='0 1 0 1'/>
+</body>
+
+<body name="stackplate3" pos="0.7 1.8 0.52" >
+    <geom name="stackplate3_geom" type="box" pos="0 0 0" size="0.09 0.12 0.03" rgba='1 0 0 1'/>
+</body>
+
+
+<body name="door_type2" pos="1.4 0.5 0.5" >
+    <geom name="backboard_door2" type="box" pos="0 0 0" size="0.2 0.03 0.15" rgba='0 0 0 1'/>
+    <body name="key_door2" pos="0 -0.03 0">
+        <geom name="handle_door2" type="capsule" fromto="0 0 0 0 -0.07 0" size="0.02"  rgba='1 1 1 1'/>
+        <geom name="handle_right_door2" type="box" pos="0.085 -0.14 0" size="0.07 0.01 0.04" rgba='1 1 1 1'/>
+        <geom name="handle_left_door2" type="box" pos="-0.085 -0.14 0" size="0.07 0.01 0.04" rgba='1 1 1 1'/>
+        <joint name="handle_joint_door2" type="hinge" pos="0 0 0" axis="0 1 0" range="0 1.57" damping="100.0" />
+    </body>
+</body>
+
+<body name="door_opening_tool2" pos="1.8 1.0 0.5" >
+    <geom name="door_opening_tool2_geom" type="cylinder" pos="0 0 0" size="0.05 0.07" rgba='0 1 0 1'/>
+    <geom name="door_opening_tooltip2_geom" type="box" pos="0.0 0 0.09" size="0.01 0.03 0.04" rgba='0 1 0 1'/>
+</body>
+
+<body name="table_2" pos="-1.5 -1.5 0.35" >
+    <geom name="table_top2" type="box" pos="0 0 0" size="1.5 0.75 0.01" rgba='0.13 0.6 0.13 1'/>
+    <geom name="leg12" type="box" pos="1.45 0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg22" type="box" pos="1.45 -0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg32" type="box" pos="-1.45 0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="leg42" type="box" pos="-1.45 -0.7 -0.2" size="0.05 0.05 0.2" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_left2" type="box" pos="0 0.75 0.075" size="1.5 0.02 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_right2" type="box" pos="0 -0.75 0.075" size="1.5 0.02 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_top2" type="box" pos="1.5 0 0.075" size="0.02 0.75 0.075" rgba='0.5 0.2 0 1'/>
+    <geom name="siderail_bottom2" type="box" pos="-1.5 0 0.075" size="0.02 0.75 0.075" rgba='0.5 0.2 0 1'/>
+</body>
+
+<body name="sphere_billiards" pos="-1.5 -1.5 0.4" >
+    <geom name="sphere_billards_geom" type="sphere" pos="0 0 0" size="0.05" rgba='1 0.5 0.5 1'/>
+</body>
+
+<body name="full_door_3" pos="0 0 0">
+<body name="door_frame" pos="-0.80 0.85 0.50" >
+    <geom name="frame_left" rgba="0.3 0.3 0.3 1" type="box" size="0.05 0.02 0.60" pos="-0.555 0.0 0.00" contype="1" conaffinity="1" />
+    <geom name="frame_right" rgba="0.3 0.3 0.3 1" type="box" size="0.05 0.02 0.60" pos="0.555 0.0 0.00" contype="1" conaffinity="1" />
+    <geom name="frame_top" rgba="0.3 0.3 0.3 1" type="box" size="0.61 0.02 0.05" pos="0.0 0.0 0.655" contype="1" conaffinity="1" />
+</body>
+
+<body name="door" pos="-0.80 0.85 0.50">
+    <geom name="door" rgba="0.6 0.1 0.1 1" type="box" size="0.5 0.02 0.6" contype="1" conaffinity="1" />
+    <joint name="door_hinge" type="hinge" pos="0.45 0.0 0.0" axis="0 0 1" range="0 2" damping="10.0" />
+    
+    <body name="door_handle" pos="-0.45 -0.05 -0.25">
+        <geom name="handle_left" type="box" rgba="0.6 0.6 0.6 1" pos="0.1 0 0.2" size="0.02 0.05 0.02" contype="1" conaffinity="1" />
+        <geom name="handle_right" type="box" rgba="0.6 0.6 0.6 1" pos="0.25 0 0.2" size="0.02 0.05 0.02" contype="1" conaffinity="1" />
+        <site name="handle" pos="0.13 -0.03 0.17" size="0.01" />
+        <geom name="handle_center" type="box" rgba="0.6 0.6 0.6 1" pos="0.175 -0.06 0.2" size="0.1 0.01 0.02" contype="1" conaffinity="1" />
+    </body>
+</body>
+</body>
+
+<body name="table_3" pos="1.25 -2.75 0.35">
+    <geom name="table_top3" type="box" pos="0 0 0" size="0.8 0.5 0.01"/>
+    <geom name="leg13" type="box" pos="0.75 0.45 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg23" type="box" pos="0.75 -0.45 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg33" type="box" pos="-0.75 0.45 -0.2" size="0.05 0.05 0.2"/>
+    <geom name="leg43" type="box" pos="-0.75 -0.45 -0.2" size="0.05 0.05 0.2"/>
+</body>
+
+<body name="goal_location" pos="1.25 -2.75 0.36">
+    <geom name="goal_geom1" type="box" pos="0 0 0" rgba="1 0 0 1" size="0.1 0.1 0.01"/>
+    <site name="geom_site1" pos="0 0 0" size="0.01" />
+</body>
+
+
+
+  </worldbody>
+  <tendon>
+        <fixed name="gripper">
+            <joint joint="left_slide"  coef="0.1"/>
+            <joint joint="right_slide"  coef="0.1"/>
+        </fixed>
+  </tendon>
+  <actuator>
+    <motor joint="base_x" ctrlrange="-2.0 2.0" ctrllimited="true" />
+    <motor joint="base_y" ctrlrange="-2.0 2.0" ctrllimited="true" />
+    <motor tendon='gripper' ctrlrange="-2.0 2.0" name='gripper_actuator'/>
+    <motor joint="r_shoulder_pan_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_shoulder_lift_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_upper_arm_roll_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_elbow_flex_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_forearm_roll_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_wrist_flex_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+    <motor joint="r_wrist_roll_joint" ctrlrange="-10.0 10.0" ctrllimited="true" />
+  </actuator>
+</mujoco>
